@@ -9,6 +9,8 @@ import 'package:mandaditos_express/components/rounded_button.dart';
 import 'package:mandaditos_express/components/rounded_input.dart';
 import 'package:mandaditos_express/components/rountded_password_input.dart';
 import 'package:mandaditos_express/constants.dart';
+import 'package:mandaditos_express/services/services.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -139,8 +141,12 @@ class _LoginScreenState extends State<LoginScreen>
         child: MaterialButton(
           padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           minWidth: MediaQuery.of(context).size.width,
-          onPressed: () {},
-          child: Text("CONTINUAR",
+          onPressed: () async {
+            final authService = Provider.of<AuthService>(context);
+            // Validar Login
+            
+          },
+          child: const Text("CONTINUAR",
               style: TextStyle(
                   color: kPrimaryColor,
                   fontSize: 18,
