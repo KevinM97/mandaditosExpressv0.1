@@ -1,7 +1,10 @@
 import 'dart:ui';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mandaditos_express/Screens/home_scream.dart';
 import 'package:mandaditos_express/components/rounded_button.dart';
 import 'package:mandaditos_express/components/rounded_input.dart';
 import 'package:mandaditos_express/components/rountded_password_input.dart';
@@ -22,6 +25,9 @@ class _LoginScreenState extends State<LoginScreen>
   //editing controller
   final TextEditingController emailController = new TextEditingController();
   final TextEditingController passwordController = new TextEditingController();
+
+  //FireBase
+  final _auth = FirebaseAuth.instance;
 
   final TextEditingController emailRegisterController =
       new TextEditingController();
@@ -58,17 +64,27 @@ class _LoginScreenState extends State<LoginScreen>
         autofocus: false,
         controller: emailController,
         keyboardType: TextInputType.emailAddress,
-        /*validator: (){},*/
+        validator: (value) {
+          if (value!.isEmpty) {
+            return "Ingresa un email";
+          } //Exprecion del email valido
+          // ignore: valid_regexps
+          if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+              .hasMatch(value)) {
+            return "Ingresa un email valido";
+          }
+          return null;
+        },
         onSaved: (value) {
           emailController.text = value!;
         },
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
-            prefixIcon: Icon(
+            prefixIcon: const Icon(
               Icons.mail,
               color: kSecundaryColor,
             ),
-            contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+            contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
             hintText: "Email",
             border:
                 OutlineInputBorder(borderRadius: BorderRadius.circular(10))));
@@ -78,7 +94,15 @@ class _LoginScreenState extends State<LoginScreen>
       autofocus: false,
       obscureText: true,
       controller: passwordController,
-      /*validator: (){},*/
+      validator: (value) {
+        RegExp regex = RegExp(r'^.{6,}$');
+        if (value!.isEmpty) {
+          return ("Ingresa tu contraseña");
+        }
+        if (!regex.hasMatch(value)) {
+          return ("Ingresa una contraseña valida (Minimo 6 caracteres)");
+        }
+      },
       onSaved: (value) {
         passwordController.text = value!;
       },
@@ -97,8 +121,10 @@ class _LoginScreenState extends State<LoginScreen>
         child: MaterialButton(
           padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           minWidth: MediaQuery.of(context).size.width,
-          onPressed: () {},
-          child: Text("CONTINUAR",
+          onPressed: () {
+            signIn(emailController.text, passwordController.text);
+          },
+          child: const Text("CONTINUAR",
               style: TextStyle(
                   color: kPrimaryColor,
                   fontSize: 18,
@@ -382,4 +408,20 @@ class _LoginScreenState extends State<LoginScreen>
                   : null),
         ),
       );
+
+  //Funcion de login
+  void signIn(String email, String password) async {
+    if (_formKey.currentState!.validate()) {
+      await _auth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((uid) => {
+                Fluttertoast.showToast(msg: "Login Successful"),
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => HomeScreen()))
+              })
+          .catchError((e) {
+        Fluttertoast.showToast(msg: e!.message);
+      });
+    }
+  }
 }
