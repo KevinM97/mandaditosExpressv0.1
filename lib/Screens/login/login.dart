@@ -23,6 +23,14 @@ class _LoginScreenState extends State<LoginScreen>
   final TextEditingController emailController = new TextEditingController();
   final TextEditingController passwordController = new TextEditingController();
 
+  final TextEditingController emailRegisterController =
+      new TextEditingController();
+  final TextEditingController userController = new TextEditingController();
+  final TextEditingController passwordRegisterController =
+      new TextEditingController();
+  final TextEditingController confirmPasswordController =
+      new TextEditingController();
+
   bool isLogin = true;
   late Animation<double> containerSize;
   late AnimationController animationController;
@@ -56,7 +64,10 @@ class _LoginScreenState extends State<LoginScreen>
         },
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
-            prefixIcon: Icon(Icons.mail),
+            prefixIcon: Icon(
+              Icons.mail,
+              color: kSecundaryColor,
+            ),
             contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
             hintText: "Email",
             border:
@@ -73,9 +84,98 @@ class _LoginScreenState extends State<LoginScreen>
       },
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
-          prefixIcon: const Icon(Icons.vpn_key),
+          prefixIcon: const Icon(Icons.vpn_key, color: kSecundaryColor),
           contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Contraseña",
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+    );
+    //Login Button
+    final loginButton = Material(
+        elevation: 5,
+        borderRadius: BorderRadius.circular(30),
+        color: Colors.black,
+        child: MaterialButton(
+          padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          minWidth: MediaQuery.of(context).size.width,
+          onPressed: () {},
+          child: Text("CONTINUAR",
+              style: TextStyle(
+                  color: kPrimaryColor,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold)),
+        ));
+
+    //Register email
+    final emailRegisterField = TextFormField(
+        autofocus: false,
+        controller: emailRegisterController,
+        keyboardType: TextInputType.emailAddress,
+        /*validator: (){},*/
+        onSaved: (value) {
+          emailRegisterController.text = value!;
+        },
+        textInputAction: TextInputAction.next,
+        decoration: InputDecoration(
+            prefixIcon: Icon(
+              Icons.mail,
+              color: kSecundaryColor,
+            ),
+            contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+            hintText: "Email",
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10))));
+
+    //Register User
+    final userField = TextFormField(
+        autofocus: false,
+        controller: userController,
+        keyboardType: TextInputType.name,
+        /*validator: (){},*/
+        onSaved: (value) {
+          userController.text = value!;
+        },
+        textInputAction: TextInputAction.next,
+        decoration: InputDecoration(
+            prefixIcon: const Icon(
+              Icons.person,
+              color: kSecundaryColor,
+            ),
+            contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+            hintText: "Nombre",
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10))));
+
+    //Password Register
+    final passwordRegisterField = TextFormField(
+      autofocus: false,
+      obscureText: true,
+      controller: passwordRegisterController,
+      /*validator: (){},*/
+      onSaved: (value) {
+        passwordRegisterController.text = value!;
+      },
+      textInputAction: TextInputAction.done,
+      decoration: InputDecoration(
+          prefixIcon: const Icon(Icons.vpn_key, color: kSecundaryColor),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+          hintText: "Contraseña",
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+    );
+
+    //Password Confirm Register
+    final configPasswordRegisterField = TextFormField(
+      autofocus: false,
+      obscureText: true,
+      controller: confirmPasswordController,
+      /*validator: (){},*/
+      onSaved: (value) {
+        confirmPasswordController.text = value!;
+      },
+      textInputAction: TextInputAction.done,
+      decoration: InputDecoration(
+          prefixIcon: const Icon(Icons.vpn_key, color: kSecundaryColor),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+          hintText: "Confirmar contraseña",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
     );
 
@@ -87,40 +187,13 @@ class _LoginScreenState extends State<LoginScreen>
     double defaultLoginSize = size.height - (size.height * 0.2);
     double defaultRegisterSize = size.height - (size.height * 0.1);
     containerSize = Tween<double>(
-            begin: size.height * 0.1, end: defaultRegisterSize)
+            begin: size.height * 0.12, end: defaultRegisterSize)
         .animate(
             CurvedAnimation(parent: animationController, curve: Curves.linear));
     return Scaffold(
       backgroundColor: kBackgroundColor,
       body: Stack(
         children: [
-          //Cancel Button
-          AnimatedOpacity(
-            opacity: isLogin ? 0.0 : 1.0,
-            duration: animationDuration,
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: Container(
-                width: size.width,
-                height: size.height * 0.1,
-                alignment: Alignment.bottomCenter,
-                child: IconButton(
-                  onPressed: isLogin
-                      ? null
-                      : () {
-                          setState(() {
-                            // retorna un valor nulo y desavilita el boton
-                            animationController.reverse();
-                            isLogin = !isLogin;
-                          });
-                        },
-                  icon: const Icon(Icons.close),
-                  color: kSecundaryColor,
-                ),
-              ),
-            ),
-          ),
-
           //Login FORM
           AnimatedOpacity(
             opacity: isLogin ? 1.0 : 0.0,
@@ -128,6 +201,7 @@ class _LoginScreenState extends State<LoginScreen>
             child: Align(
               alignment: Alignment.center,
               child: SingleChildScrollView(
+                padding: const EdgeInsets.all(36.0),
                 child: SizedBox(
                   width: size.width,
                   height: defaultLoginSize,
@@ -147,13 +221,14 @@ class _LoginScreenState extends State<LoginScreen>
                             fontWeight: FontWeight.bold, fontSize: 30),
                       ),
                       const SizedBox(height: 20),
-                      const RoundedInput(icono: Icons.email, hint: 'Usuario'),
-                      //emailField,
+                      //const RoundedInput(icono: Icons.email, hint: 'Usuario'),
+                      emailField,
                       const SizedBox(height: 20),
-                      const RoundedPasswordInput(hint: 'Contraseña'),
-                      //passwordField,
+                      //const RoundedPasswordInput(hint: 'Contraseña'),
+                      passwordField,
                       const SizedBox(height: 10),
-                      const RoundedButton(title: 'CONTINUAR')
+                      loginButton,
+                      //const RoundedButton(title: 'CONTINUAR')
                     ],
                   ),
                 ),
@@ -183,6 +258,7 @@ class _LoginScreenState extends State<LoginScreen>
               child: Align(
                 alignment: Alignment.center,
                 child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(36.0),
                   child: SizedBox(
                     width: size.width,
                     height: defaultLoginSize,
@@ -190,6 +266,35 @@ class _LoginScreenState extends State<LoginScreen>
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        //Button para cerrar pestaña
+                        AnimatedOpacity(
+                            opacity: isLogin ? 0.0 : 1.0,
+                            duration: animationDuration,
+                            child: SizedBox(
+                              width: size.width,
+                              height: size.height * 0.1,
+                              child: Align(
+                                alignment: Alignment.topLeft,
+                                child: Container(
+                                  alignment: Alignment.bottomLeft,
+                                  child: IconButton(
+                                    iconSize: 30,
+                                    onPressed: isLogin
+                                        ? null
+                                        : () {
+                                            setState(() {
+                                              // retorna un valor nulo y desavilita el boton
+                                              animationController.reverse();
+                                              isLogin = !isLogin;
+                                            });
+                                          },
+                                    icon: const Icon(Icons.arrow_back_ios),
+                                    color: kSecundaryColor,
+                                  ),
+                                ),
+                              ),
+                            )),
+
                         Image.asset(
                           'assets/images/Login2.png',
                           height: 150,
@@ -202,12 +307,19 @@ class _LoginScreenState extends State<LoginScreen>
                               fontWeight: FontWeight.bold, fontSize: 30),
                         ),
                         const SizedBox(height: 20),
-                        const RoundedInput(icono: Icons.email, hint: 'Usuario'),
-                        const RoundedInput(
-                            icono: Icons.face_rounded, hint: 'Name'),
-                        const RoundedPasswordInput(hint: 'Contraseña'),
-                        const RoundedPasswordInput(
-                            hint: 'Confirmar Contraseña'),
+                        //const RoundedInput(icono: Icons.email, hint: 'Usuario'),
+                        // const RoundedInput(
+                        //icono: Icons.face_rounded, hint: 'Name'),
+                        //const RoundedPasswordInput(hint: 'Contraseña'),
+                        userField,
+                        const SizedBox(height: 20),
+                        emailRegisterField,
+                        const SizedBox(height: 20),
+                        passwordRegisterField,
+                        const SizedBox(height: 20),
+                        configPasswordRegisterField,
+                        //const RoundedPasswordInput(
+                        //hint: 'Confirmar Contraseña'),
                         const SizedBox(height: 10),
                         const RoundedButton(title: 'CONTINUAR')
                       ],
