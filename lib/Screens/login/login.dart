@@ -411,7 +411,7 @@ class _LoginScreenState extends State<LoginScreen>
 
   //Funcion de login
   void signIn(String email, String password) async {
-    if (_formKey.currentState!.validate()) {
+    if (_formKey.currentState?.validate() ?? false) {
       await _auth
           .signInWithEmailAndPassword(email: email, password: password)
           .then((uid) => {
