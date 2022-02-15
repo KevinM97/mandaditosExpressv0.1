@@ -105,6 +105,21 @@ class _LoginScreenState extends State<LoginScreen>
                   fontWeight: FontWeight.bold)),
         ));
 
+    //Register Button
+    final registerButton = Material(
+        elevation: 5,
+        borderRadius: BorderRadius.circular(30),
+        color: Colors.black,
+        child: MaterialButton(
+          padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          minWidth: MediaQuery.of(context).size.width,
+          onPressed: () {},
+          child: Text("CONTINUAR",
+              style: TextStyle(
+                  color: kPrimaryColor,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold)),
+        ));
     //Register email
     final emailRegisterField = TextFormField(
         autofocus: false,
@@ -321,7 +336,8 @@ class _LoginScreenState extends State<LoginScreen>
                         //const RoundedPasswordInput(
                         //hint: 'Confirmar Contraseña'),
                         const SizedBox(height: 10),
-                        const RoundedButton(title: 'CONTINUAR')
+                        registerButton,
+                        //const RoundedButton(title: 'CONTINUAR')
                       ],
                     ),
                   ),
