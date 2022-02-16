@@ -22,7 +22,7 @@ void main() async {
          ],
          child: const MyApp(),
        )
-     );*/
+     ); */
    runApp(const AppState());
 }
 
@@ -54,6 +54,7 @@ class _MyAppState extends State<MyApp> {
 
     //Context
     PushNotificationService.messagesStream.listen((message) {
+      // ignore: avoid_print
       print('MyApp: $message');
     });
   }
