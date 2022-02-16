@@ -240,7 +240,7 @@ class _LoginForm extends StatelessWidget {
             decoration: InputDecorations.authInputDecoration(
                 hintText: 'ejemplo@email.com',
                 prefixIcon: Icons.email,
-                labelText: 'Correo electronico'),
+                labelText: 'Correo electrónico'),
             onChanged: (value) => loginForm.email = value,
             validator: (value) {
               String pattern =

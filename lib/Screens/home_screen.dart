@@ -14,7 +14,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
-  final List<String> _options = ["Usuario", "Mandado", "Chat", "Opinion"];
+  final List<String> _options = ["Usuario", "Mandado", "Chat", "Opinión"];
   @override
   Widget build(BuildContext context) {
     //final mainProvider = Provider.of<MainProvider>(context, listen: true);
