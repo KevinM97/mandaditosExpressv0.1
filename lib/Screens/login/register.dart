@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'package:mandaditos_express/constants.dart';
@@ -16,6 +15,7 @@ class RegisterForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final loginForm = Provider.of<LoginFormProvider>(context);
+
     return Form(
       key: loginForm.formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -39,6 +39,17 @@ class RegisterForm extends StatelessWidget {
                   ? null
                   : 'El correo es invalido';
             },
+          ),
+          const SizedBox(height: 20.0),
+          TextFormField(
+            autofocus: false,
+            keyboardType: TextInputType.emailAddress,
+            textInputAction: TextInputAction.next,
+            decoration: InputDecorations.authInputDecoration(
+                hintText: 'User',
+                prefixIcon: Icons.email,
+                labelText: 'Nombre de usuario'),
+            onChanged: (value) => loginForm.user = value,
           ),
           const SizedBox(height: 20.0),
           TextFormField(
@@ -79,7 +90,7 @@ class RegisterForm extends StatelessWidget {
                       // ignore: todo
                       // TODO: validar si el login es correcto
                       final String? errorMessage = await authService.createUser(
-                          loginForm.email, loginForm.password);
+                          loginForm.email, loginForm.password, loginForm.user);
                       // ignore: avoid_print
                       if (errorMessage == null) {
                         Navigator.pushReplacementNamed(context, 'home');

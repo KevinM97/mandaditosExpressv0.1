@@ -9,10 +9,11 @@ class AuthService extends ChangeNotifier {
 
   final storage = const FlutterSecureStorage();
 
-  Future<String?> createUser(String email, String password) async {
+  Future<String?> createUser(String email, String password, String user) async {
     final Map<String, dynamic> authData = {
       'email': email,
       'password': password,
+      'usuario': user,
       'returnSecureToken': true
     };
 

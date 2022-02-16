@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mandaditos_express/constants.dart';
@@ -241,7 +240,7 @@ class _LoginForm extends StatelessWidget {
             decoration: InputDecorations.authInputDecoration(
                 hintText: 'ejemplo@email.com',
                 prefixIcon: Icons.email,
-                labelText: 'Correo elecronico'),
+                labelText: 'Correo electronico'),
             onChanged: (value) => loginForm.email = value,
             validator: (value) {
               String pattern =
@@ -264,9 +263,9 @@ class _LoginForm extends StatelessWidget {
                 labelText: 'Contraseña'),
             onChanged: (value) => loginForm.password = value,
             validator: (value) {
-              return (value != null && value.length >= 6)
+              return (value != null && value.length >= 5)
                   ? null
-                  : 'La contraseña debe tener 6 caracteres';
+                  : 'La contraseña debe tener 5 caracteres';
             },
           ),
           const SizedBox(height: 20.0),
