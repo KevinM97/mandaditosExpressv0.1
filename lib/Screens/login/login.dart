@@ -1,13 +1,10 @@
-import 'dart:ui';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:mandaditos_express/Screens/home_scream.dart';
-import 'package:mandaditos_express/components/rounded_button.dart';
-import 'package:mandaditos_express/components/rounded_input.dart';
-import 'package:mandaditos_express/components/rountded_password_input.dart';
+import 'package:mandaditos_express/Screens/home_screen.dart';
+
 import 'package:mandaditos_express/constants.dart';
 import 'package:mandaditos_express/services/services.dart';
 import 'package:provider/provider.dart';
@@ -121,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen>
         borderRadius: BorderRadius.circular(30),
         color: Colors.black,
         child: MaterialButton(
-          padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           minWidth: MediaQuery.of(context).size.width,
           onPressed: () {
             signIn(emailController.text, passwordController.text);
@@ -163,7 +160,7 @@ class _LoginScreenState extends State<LoginScreen>
         },
         textInputAction: TextInputAction.next,
         decoration: InputDecoration(
-            prefixIcon: Icon(
+            prefixIcon: const Icon(
               Icons.mail,
               color: kSecundaryColor,
             ),
@@ -423,7 +420,7 @@ class _LoginScreenState extends State<LoginScreen>
           .then((uid) => {
                 Fluttertoast.showToast(msg: "Login Successful"),
                 Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => HomeScreen()))
+                    MaterialPageRoute(builder: (context) => const HomeScreen()))
               })
           .catchError((e) {
         Fluttertoast.showToast(msg: e!.message);
