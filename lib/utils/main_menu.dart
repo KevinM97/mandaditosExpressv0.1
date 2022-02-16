@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mandaditos_express/Screens/chat_screen.dart';
 import 'package:mandaditos_express/Screens/list_product_screen.dart';
-import 'package:mandaditos_express/Screens/loading_screen.dart';
+// import 'package:mandaditos_express/Screens/loading_screen.dart';
 // import 'package:mandaditos_express/Screens/mandado_screen.dart';
 import 'package:mandaditos_express/Screens/usuario_screen.dart';
 
@@ -20,9 +20,9 @@ List<MenuItem> menuOptions = [
 
 // ignore: non_constant_identifier_names
 List<Widget> content_widget = [
-  AccountPage(),
+  const AccountPage(),
   // LoadingScreen(),
-  ChatWidget(),
-  ChatWidget(),
-  ListProduct()
+  const ChatWidget(),
+  const ChatWidget(),
+  const ListProduct()
 ];
