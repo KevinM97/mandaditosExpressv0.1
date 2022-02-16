@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mandaditos_express/providers/theme_provider.dart';
+// import 'package:mandaditos_express/providers/theme_provider.dart';
 import 'package:mandaditos_express/services/services.dart';
 import 'package:mandaditos_express/utils/main_menu.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             bottomOpacity: 0.0,
             elevation: 0.0,
-            leading: SizedBox.square(
+            leading: const SizedBox.square(
               dimension: 40.0,
               // child: Switch(
               //   activeColor: Theme.of(context).primaryColorLight,
@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     await authService.logout();
                     Navigator.pushReplacementNamed(context, 'login');
                   },
-                  icon: Icon(Icons.login_outlined)),
+                  icon: const Icon(Icons.login_outlined)),
             ]),
         body: content_widget[_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
