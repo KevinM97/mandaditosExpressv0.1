@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:mandaditos_express/constants.dart';
 import 'package:mandaditos_express/providers/login_form_provider.dart';
 import 'package:mandaditos_express/services/auth_services.dart';
+import 'package:mandaditos_express/services/notifications_service.dart';
 import 'package:mandaditos_express/ui/input_decoration.dart';
 import 'package:provider/provider.dart';
 
@@ -80,14 +81,15 @@ class RegisterForm extends StatelessWidget {
                       final String? errorMessage = await authService.createUser(
                           loginForm.email, loginForm.password);
                       // ignore: avoid_print
-                      print('INGRESO');
                       if (errorMessage == null) {
-                        //Navigator.pushReplacementNamed(context, 'home');
+                        Navigator.pushReplacementNamed(context, 'home');
                       } else {
                         // ignore: todo
                         // TODO: mostrar error en pantalla
                         // ignore: avoid_print
-                        print(errorMessage);
+
+                        NotificationService.showSnackbar(
+                            'El usuario ya esta registrado');
                         loginForm.isLoading = false;
                       }
                     },

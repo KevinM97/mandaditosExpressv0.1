@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mandaditos_express/constants.dart';
 import 'package:mandaditos_express/providers/login_form_provider.dart';
+import 'package:mandaditos_express/services/notifications_service.dart';
+import 'package:mandaditos_express/services/services.dart';
 import 'package:mandaditos_express/ui/input_decoration.dart';
 import 'package:mandaditos_express/Screens/login/register.dart';
 import 'package:provider/provider.dart';
@@ -279,16 +281,29 @@ class _LoginForm extends StatelessWidget {
                   ? null
                   : () async {
                       FocusScope.of(context).unfocus();
+                      final authService =
+                          Provider.of<AuthService>(context, listen: false);
+
                       if (!loginForm.isValidForm()) return;
 
                       loginForm.isLoading = true;
 
-                      await Future.delayed(const Duration(seconds: 1));
-
                       // ignore: todo
-                      //TODO: validar el login es correcto
-                      loginForm.isLoading = false;
-                      // Navigator.pushReplacementNamed(context, 'HomeScreen');
+                      // TODO: validar si el login es correcto
+                      final String? errorMessage = await authService.login(
+                          loginForm.email, loginForm.password);
+                      // ignore: avoid_print
+                      if (errorMessage == null) {
+                        Navigator.pushReplacementNamed(context, 'home');
+                      } else {
+                        // ignore: todo
+                        // TODO: mostrar error en pantalla
+                        // ignore: avoid_print
+                        //print(errorMessage);
+                        NotificationService.showSnackbar(
+                            'Ingrese los datos correctos');
+                        loginForm.isLoading = false;
+                      }
                     },
               child: Text(
                 loginForm.isLoading ? 'Ingresando' : "CONTINUAR",
