@@ -10,8 +10,8 @@
    
 
    <application
-        android:label="mandaditos express"
-        android:icon="@mipmap/ic_launcher">
+        android:label="Mandaditos Express"
+        android:icon="@mipmap/logoapp">
 
         <meta-data android:name="com.google.android.geo.API_KEY"
                android:value="AIzaSyDHXM3hpXQG1GiBM0td1O9J77y0zdGIKG0"/>
