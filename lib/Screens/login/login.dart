@@ -1,12 +1,12 @@
-
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:mandaditos_express/Screens/home_screen.dart';
-
 import 'package:mandaditos_express/constants.dart';
+import 'package:mandaditos_express/providers/login_form_provider.dart';
+import 'package:mandaditos_express/services/notifications_service.dart';
 import 'package:mandaditos_express/services/services.dart';
+import 'package:mandaditos_express/ui/input_decoration.dart';
+import 'package:mandaditos_express/Screens/login/register.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -18,24 +18,6 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen>
     with SingleTickerProviderStateMixin {
-  // Form Key
-  final _formKey = GlobalKey<FormState>();
-
-  //editing controller
-  final TextEditingController emailController = new TextEditingController();
-  final TextEditingController passwordController = new TextEditingController();
-
-  //FireBase
-  final _auth = FirebaseAuth.instance;
-
-  final TextEditingController emailRegisterController =
-      new TextEditingController();
-  final TextEditingController userController = new TextEditingController();
-  final TextEditingController passwordRegisterController =
-      new TextEditingController();
-  final TextEditingController confirmPasswordController =
-      new TextEditingController();
-
   bool isLogin = true;
   late Animation<double> containerSize;
   late AnimationController animationController;
@@ -58,178 +40,16 @@ class _LoginScreenState extends State<LoginScreen>
 
   @override
   Widget build(BuildContext context) {
-    //EmailField
-    final emailField = TextFormField(
-        autofocus: false,
-        controller: emailController,
-        keyboardType: TextInputType.emailAddress,
-        validator: (value) {
-          if (value!.isEmpty) {
-            return "Ingresa un email";
-          } //Exprecion del email valido
-          // ignore: valid_regexps
-          if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
-              .hasMatch(value)) {
-            return "Ingresa un email valido";
-          }
-          return null;
-        },
-        onSaved: (value) {
-          emailController.text = value!;
-        },
-        textInputAction: TextInputAction.next,
-        decoration: InputDecoration(
-            prefixIcon: const Icon(
-              Icons.mail,
-              color: kSecundaryColor,
-            ),
-            contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-            hintText: "Email",
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(10))));
-
-    //Password field
-    final passwordField = TextFormField(
-      autofocus: false,
-      obscureText: true,
-      controller: passwordController,
-      validator: (value) {
-        RegExp regex = RegExp(r'^.{6,}$');
-        if (value!.isEmpty) {
-          return ("Ingresa tu contraseña");
-        }
-        if (!regex.hasMatch(value)) {
-          return ("Ingresa una contraseña valida (Minimo 6 caracteres)");
-        }
-      },
-      onSaved: (value) {
-        passwordController.text = value!;
-      },
-      textInputAction: TextInputAction.done,
-      decoration: InputDecoration(
-          prefixIcon: const Icon(Icons.vpn_key, color: kSecundaryColor),
-          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Contraseña",
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
-    );
     //Login Button
-    final loginButton = Material(
-        elevation: 5,
-        borderRadius: BorderRadius.circular(30),
-        color: Colors.black,
-        child: MaterialButton(
-          padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-          minWidth: MediaQuery.of(context).size.width,
-          onPressed: () {
-            signIn(emailController.text, passwordController.text);
-          },
-          child: const Text("CONTINUAR",
-              style: TextStyle(
-                  color: kPrimaryColor,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold)),
-        ));
 
     //Register Button
-    final registerButton = Material(
-        elevation: 5,
-        borderRadius: BorderRadius.circular(30),
-        color: Colors.black,
-        child: MaterialButton(
-          padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          minWidth: MediaQuery.of(context).size.width,
-          onPressed: () async {
-            final authService = Provider.of<AuthService>(context);
-            // Validar Login
-            
-          },
-          child: const Text("CONTINUAR",
-              style: TextStyle(
-                  color: kPrimaryColor,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold)),
-        ));
-    //Register email
-    final emailRegisterField = TextFormField(
-        autofocus: false,
-        controller: emailRegisterController,
-        keyboardType: TextInputType.emailAddress,
-        /*validator: (){},*/
-        onSaved: (value) {
-          emailRegisterController.text = value!;
-        },
-        textInputAction: TextInputAction.next,
-        decoration: InputDecoration(
-            prefixIcon: const Icon(
-              Icons.mail,
-              color: kSecundaryColor,
-            ),
-            contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-            hintText: "Email",
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(10))));
-
-    //Register User
-    final userField = TextFormField(
-        autofocus: false,
-        controller: userController,
-        keyboardType: TextInputType.name,
-        /*validator: (){},*/
-        onSaved: (value) {
-          userController.text = value!;
-        },
-        textInputAction: TextInputAction.next,
-        decoration: InputDecoration(
-            prefixIcon: const Icon(
-              Icons.person,
-              color: kSecundaryColor,
-            ),
-            contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-            hintText: "Nombre",
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(10))));
-
-    //Password Register
-    final passwordRegisterField = TextFormField(
-      autofocus: false,
-      obscureText: true,
-      controller: passwordRegisterController,
-      /*validator: (){},*/
-      onSaved: (value) {
-        passwordRegisterController.text = value!;
-      },
-      textInputAction: TextInputAction.done,
-      decoration: InputDecoration(
-          prefixIcon: const Icon(Icons.vpn_key, color: kSecundaryColor),
-          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Contraseña",
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
-    );
-
-    //Password Confirm Register
-    final configPasswordRegisterField = TextFormField(
-      autofocus: false,
-      obscureText: true,
-      controller: confirmPasswordController,
-      /*validator: (){},*/
-      onSaved: (value) {
-        confirmPasswordController.text = value!;
-      },
-      textInputAction: TextInputAction.done,
-      decoration: InputDecoration(
-          prefixIcon: const Icon(Icons.vpn_key, color: kSecundaryColor),
-          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Confirmar contraseña",
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
-    );
-
     Size size = MediaQuery.of(context).size;
 
     double viewInset = MediaQuery.of(context)
         .viewInsets
         .bottom; //Lo usaremos para determinar Keyboard esta abierto o no
     double defaultLoginSize = size.height - (size.height * 0.2);
-    double defaultRegisterSize = size.height - (size.height * 0.1);
+    double defaultRegisterSize = size.height - (size.height * 0.2);
     containerSize = Tween<double>(
             begin: size.height * 0.12, end: defaultRegisterSize)
         .animate(
@@ -264,14 +84,11 @@ class _LoginScreenState extends State<LoginScreen>
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 30),
                       ),
-                      const SizedBox(height: 20),
-                      //const RoundedInput(icono: Icons.email, hint: 'Usuario'),
-                      emailField,
-                      const SizedBox(height: 20),
-                      //const RoundedPasswordInput(hint: 'Contraseña'),
-                      passwordField,
-                      const SizedBox(height: 10),
-                      loginButton,
+                      const SizedBox(height: 20.0),
+                      ChangeNotifierProvider(
+                        create: (_) => LoginFormProvider(),
+                        child: const _LoginForm(),
+                      ),
                       //const RoundedButton(title: 'CONTINUAR')
                     ],
                   ),
@@ -327,6 +144,7 @@ class _LoginScreenState extends State<LoginScreen>
                                         ? null
                                         : () {
                                             setState(() {
+                                              FocusScope.of(context).unfocus();
                                               // retorna un valor nulo y desavilita el boton
                                               animationController.reverse();
                                               isLogin = !isLogin;
@@ -351,22 +169,10 @@ class _LoginScreenState extends State<LoginScreen>
                               fontWeight: FontWeight.bold, fontSize: 30),
                         ),
                         const SizedBox(height: 20),
-                        //const RoundedInput(icono: Icons.email, hint: 'Usuario'),
-                        // const RoundedInput(
-                        //icono: Icons.face_rounded, hint: 'Name'),
-                        //const RoundedPasswordInput(hint: 'Contraseña'),
-                        userField,
-                        const SizedBox(height: 20),
-                        emailRegisterField,
-                        const SizedBox(height: 20),
-                        passwordRegisterField,
-                        const SizedBox(height: 20),
-                        configPasswordRegisterField,
-                        //const RoundedPasswordInput(
-                        //hint: 'Confirmar Contraseña'),
-                        const SizedBox(height: 10),
-                        registerButton,
-                        //const RoundedButton(title: 'CONTINUAR')
+                        ChangeNotifierProvider(
+                          create: (_) => LoginFormProvider(),
+                          child: const RegisterForm(),
+                        ),
                       ],
                     ),
                   ),
@@ -411,20 +217,104 @@ class _LoginScreenState extends State<LoginScreen>
                   : null),
         ),
       );
+}
 
-  //Funcion de login
-  void signIn(String email, String password) async {
-    if (_formKey.currentState?.validate() ?? false) {
-      await _auth
-          .signInWithEmailAndPassword(email: email, password: password)
-          .then((uid) => {
-                Fluttertoast.showToast(msg: "Login Successful"),
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => const HomeScreen()))
-              })
-          .catchError((e) {
-        Fluttertoast.showToast(msg: e!.message);
-      });
-    }
+//Formulario
+class _LoginForm extends StatelessWidget {
+  const _LoginForm({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final loginForm = Provider.of<LoginFormProvider>(context);
+    return Form(
+      key: loginForm.formKey,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      child: Column(
+        children: [
+          //TextForm Email Login
+          TextFormField(
+            autofocus: false,
+            keyboardType: TextInputType.emailAddress,
+            textInputAction: TextInputAction.next,
+            decoration: InputDecorations.authInputDecoration(
+                hintText: 'ejemplo@email.com',
+                prefixIcon: Icons.email,
+                labelText: 'Correo elecronico'),
+            onChanged: (value) => loginForm.email = value,
+            validator: (value) {
+              String pattern =
+                  r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+              RegExp regExp = RegExp(pattern);
+              return regExp.hasMatch(value ?? '')
+                  ? null
+                  : 'El correo es invalido';
+            },
+          ),
+          const SizedBox(height: 20.0),
+          TextFormField(
+            autofocus: false,
+            obscureText: true,
+            keyboardType: TextInputType.emailAddress,
+            textInputAction: TextInputAction.next,
+            decoration: InputDecorations.authInputDecoration(
+                hintText: '******',
+                prefixIcon: Icons.vpn_key,
+                labelText: 'Contraseña'),
+            onChanged: (value) => loginForm.password = value,
+            validator: (value) {
+              return (value != null && value.length >= 6)
+                  ? null
+                  : 'La contraseña debe tener 6 caracteres';
+            },
+          ),
+          const SizedBox(height: 20.0),
+          MaterialButton(
+              color: kSecundaryColor,
+              disabledColor: Colors.grey,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30)),
+              padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+              minWidth: MediaQuery.of(context).size.width,
+              onPressed: loginForm.isLoading
+                  ? null
+                  : () async {
+                      FocusScope.of(context).unfocus();
+                      final authService =
+                          Provider.of<AuthService>(context, listen: false);
+
+                      if (!loginForm.isValidForm()) return;
+
+                      loginForm.isLoading = true;
+
+                      // ignore: todo
+                      // TODO: validar si el login es correcto
+                      final String? errorMessage = await authService.login(
+                          loginForm.email, loginForm.password);
+                      // ignore: avoid_print
+                      if (errorMessage == null) {
+                        Navigator.pushReplacementNamed(context, 'home');
+                      } else {
+                        // ignore: todo
+                        // TODO: mostrar error en pantalla
+                        // ignore: avoid_print
+                        //print(errorMessage);
+                        NotificationService.showSnackbar(
+                            'Ingrese los datos correctos');
+                        loginForm.isLoading = false;
+                      }
+                    },
+              child: Text(
+                loginForm.isLoading ? 'Ingresando' : "CONTINUAR",
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+              ))
+        ],
+      ),
+    );
   }
 }

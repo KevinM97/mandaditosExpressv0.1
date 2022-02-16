@@ -3,19 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mandaditos_express/blocs/gps/gps_bloc.dart';
 import 'package:mandaditos_express/services/auth_services.dart';
+import 'package:mandaditos_express/services/push_notifications_service.dart';
 import 'package:provider/provider.dart';
 import 'package:mandaditos_express/Screens/screens.dart';
 import 'package:mandaditos_express/constants.dart';
 
-void main() {
-  runApp(
-    MultiBlocProvider(
-      providers:[
-        BlocProvider(create: (context) => GpsBloc())
-        ],
-        child: const MyApp(),
-      )
-    );
+import 'Screens/login/check_outh_screen.dart';
+import 'services/notifications_service.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await PushNotificationService.initializeApp();
+ /*  runApp(
+     MultiBlocProvider(
+       providers:[
+         BlocProvider(create: (context) => GpsBloc()),
+        
+         ],
+         child: const MyApp(),
+       )
+     );*/
+   runApp(const AppState());
 }
 
 
@@ -33,13 +41,24 @@ class AppState extends StatelessWidget {
     );
   }
 }
-
-
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+
+    //Context
+    PushNotificationService.messagesStream.listen((message) {
+      print('MyApp: $message');
+    });
+  }
+
+ @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Mandaditos Express',
@@ -47,13 +66,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: kPrimaryColor,
       ),
-      initialRoute: 'loadingScreen',
-      routes:{
-        'login' : ( BuildContext context ) => const LoginScreen(),
-        'home'  : ( BuildContext context ) => const HomeScreen(),
-        'gps'  : ( BuildContext context ) => const GpsAccessScreen(),
-        'loadingScreen'  : ( BuildContext context ) => const LoadingScreen(),
-      }, 
+      initialRoute: 'checking',
+      routes: {
+        'checking': (BuildContext context) => const CheckAuthScreen(),
+        'login': (BuildContext context) => const LoginScreen(),
+        'home': (BuildContext context) => const HomeScreen(),
+      },
+      scaffoldMessengerKey: NotificationService.messengerKey,
     );
   }
 }
