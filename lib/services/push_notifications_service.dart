@@ -34,6 +34,7 @@ class PushNotificationService {
   static Future initializeApp() async {
     await Firebase.initializeApp();
     tokenMessage = await FirebaseMessaging.instance.getToken();
+    // ignore: avoid_print
     print(tokenMessage);
 
     //Handlers
