@@ -43,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
               // )
             ),
             actions: [
+              //Cerrar SESION
               IconButton(
                   onPressed: () async {
                     await authService.logout();

@@ -56,28 +56,28 @@ void main() async {
 //      MultiBlocProvider(
 //        providers:[
 //          BlocProvider(create: (context) => GpsBloc()),
-        
+
 //          ],
 //          child: MultiProvider(providers: [
 //                 ChangeNotifierProvider(create: (_) => AuthService()),
 //          ],
 //           child: const MyApp(),
 //           ),
-        
-//        )
-//      ); 
 
-runApp(
-    MultiProvider(
+//        )
+//      );
+
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => AuthService()),
+    ],
+    child: MultiBlocProvider(
       providers: [
-          ChangeNotifierProvider(create: (_) => AuthService()),
-         ],
-         child: MultiBlocProvider(providers: [
-              BlocProvider(create: (context) => GpsBloc()),
-         ], 
-         child: const MyApp(),),
-     )
-); 
+        BlocProvider(create: (context) => GpsBloc()),
+      ],
+      child: const MyApp(),
+    ),
+  ));
 }
 
 class AppState extends StatelessWidget {
