@@ -3,15 +3,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mandaditos_express/blocs/gps/gps_bloc.dart';
-import 'package:mandaditos_express/services/auth_services.dart';
-import 'package:mandaditos_express/services/push_notifications_service.dart';
+import 'package:mandaditos_express/blocs/blocs.dart';
+import 'package:mandaditos_express/services/services.dart';
 import 'package:provider/provider.dart';
 import 'package:mandaditos_express/Screens/screens.dart';
 import 'package:mandaditos_express/constants.dart';
-
 import 'Screens/login/check_outh_screen.dart';
-import 'services/notifications_service.dart';
 
 import 'dart:developer' as developer;
 
@@ -71,9 +68,12 @@ runApp(
     MultiProvider(
       providers: [
           ChangeNotifierProvider(create: (_) => AuthService()),
+          //Modo oscuro
          ],
          child: MultiBlocProvider(providers: [
               BlocProvider(create: (context) => GpsBloc()),
+              BlocProvider(create: (context) => LocationBloc()),
+
          ], 
          child: const MyApp(),),
      )
