@@ -16,7 +16,7 @@ class CheckAuthScreen extends StatelessWidget {
         child: FutureBuilder(
           future: authService.readToken(),
           builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-            if (!snapshot.hasData) return const Text('Espere');
+            if (!snapshot.hasData) return const Text('Por favor, espere...', style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600 ),);
 
             if (snapshot.data == '') {
               Future.microtask(() {

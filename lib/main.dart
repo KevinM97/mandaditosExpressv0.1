@@ -2,8 +2,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:mandaditos_express/blocs/gps/gps_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mandaditos_express/blocs/gps/gps_bloc.dart';
 import 'package:mandaditos_express/services/auth_services.dart';
 import 'package:mandaditos_express/services/push_notifications_service.dart';
 import 'package:provider/provider.dart';
@@ -52,16 +52,32 @@ void main() async {
       sound: true,
     );
   }
-  /*  runApp(
-     MultiBlocProvider(
-       providers:[
-         BlocProvider(create: (context) => GpsBloc()),
+// runApp(
+//      MultiBlocProvider(
+//        providers:[
+//          BlocProvider(create: (context) => GpsBloc()),
         
+//          ],
+//          child: MultiProvider(providers: [
+//                 ChangeNotifierProvider(create: (_) => AuthService()),
+//          ],
+//           child: const MyApp(),
+//           ),
+        
+//        )
+//      ); 
+
+runApp(
+    MultiProvider(
+      providers: [
+          ChangeNotifierProvider(create: (_) => AuthService()),
          ],
-         child: const MyApp(),
-       )
-     ); */
-  runApp(const AppState());
+         child: MultiBlocProvider(providers: [
+              BlocProvider(create: (context) => GpsBloc()),
+         ], 
+         child: const MyApp(),),
+     )
+); 
 }
 
 class AppState extends StatelessWidget {
@@ -69,12 +85,7 @@ class AppState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => AuthService()),
-      ],
-      child: const MyApp(),
-    );
+    return const MyApp();
   }
 }
 

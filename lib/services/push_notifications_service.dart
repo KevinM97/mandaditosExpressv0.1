@@ -21,6 +21,7 @@ class PushNotificationService {
 
   //Foreground
   static Future _onMessageOpenApp(RemoteMessage message) async {
+    // ignore: avoid_print
     print('onMessageOpenApp Hander ${message.messageId}');
     _messageStream.add(message.notification?.title ?? 'No title');
   }
