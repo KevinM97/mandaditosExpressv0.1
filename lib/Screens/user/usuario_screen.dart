@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 // import 'package:image_picker/image_picker.dart';
 import 'package:mandaditos_express/Screens/user/edit_info_screen.dart';
 import 'package:mandaditos_express/Screens/user/edit_pass_screen.dart';
+import 'package:mandaditos_express/services/auth_services.dart';
+import 'package:provider/provider.dart';
 // import 'package:mandaditos_express/services/image_service.dart';
 
 class AccountPage extends StatefulWidget {
@@ -169,6 +171,7 @@ class _ButtonsState extends State<_Buttons> {
 
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context, listen: false);
     return Expanded(
       child: ListView(
         children: [
@@ -210,7 +213,10 @@ class _ButtonsState extends State<_Buttons> {
             icon: Icons.power_settings_new,
             color: Colors.red,
             text: 'Cerrar sesión',
-            onTap: () {},
+            onTap: () async {
+              await authService.logout();
+              Navigator.pushReplacementNamed(context, 'login');
+            },
           ),
         ],
       ),

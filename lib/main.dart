@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mandaditos_express/Screens/mandado_screen.dart';
 import 'package:mandaditos_express/bloc/theme_bloc.dart';
 import 'package:mandaditos_express/blocs/gps/gps_bloc.dart';
 import 'package:mandaditos_express/services/auth_services.dart';
@@ -168,6 +169,8 @@ class _MyAppState extends State<MyApp> {
                             const CheckAuthScreen(),
                         'login': (BuildContext context) => const LoginScreen(),
                         'home': (BuildContext context) => const HomeScreen(),
+                        'mandado': (BuildContext context) =>
+                            const MandadoScreen(),
                       },
                       scaffoldMessengerKey: NotificationService.messengerKey,
                     ));

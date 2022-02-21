@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mandaditos_express/Screens/loading_screen.dart';
 
 class MandadoScreen extends StatefulWidget {
   const MandadoScreen({Key? key}) : super(key: key);
