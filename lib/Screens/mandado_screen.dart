@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mandaditos_express/Screens/loading_screen.dart';
 
 class MandadoScreen extends StatefulWidget {
   const MandadoScreen({Key? key}) : super(key: key);
@@ -116,7 +115,7 @@ class _MandadoWidget extends State<MandadoScreen> {
                           //     context,
                           //     MaterialPageRoute(
                           //         builder: (context) => const LoadingScreen()));
-                          Navigator.pushReplacementNamed(context, 'login');
+                          Navigator.pushReplacementNamed(context, 'loading_map');
                         },
                         child: Column(
                           mainAxisSize: MainAxisSize.max,

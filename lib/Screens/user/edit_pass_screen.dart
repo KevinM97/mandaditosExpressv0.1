@@ -111,12 +111,12 @@ class _EditPassWidgetState extends State<EditPassWidget> {
                                   passwordVisibility1
                                       ? Icons.visibility_outlined
                                       : Icons.visibility_off_outlined,
-                                  color: Color(0xFF757575),
+                                  color: const Color(0xFF757575),
                                   size: 22,
                                 ),
                               ),
                             ),
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w200,
                               fontStyle: FontStyle.italic,

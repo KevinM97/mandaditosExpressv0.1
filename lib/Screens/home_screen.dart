@@ -12,44 +12,36 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
   final List<String> _options = ["Usuario", "Mandado", "Chat", "Opinión"];
   @override
   Widget build(BuildContext context) {
     //final mainProvider = Provider.of<MainProvider>(context, listen: true);
-    final authService = Provider.of<AuthService>(context, listen: false);
     //final mainProvider = Provider.of<MainProvider>(context, listen: true);
 
     return Scaffold(
         appBar: AppBar(
-            backgroundColor: Colors.deepOrange,
-            centerTitle: true,
-            title: Text(
-              _options[_selectedIndex],
-              style: const TextStyle(color: Colors.white),
-            ),
-            bottomOpacity: 0.0,
-            elevation: 0.0,
-            leading: const SizedBox.square(
-              dimension: 40.0,
-              // child: Switch(
-              //     activeColor: Theme.of(context).primaryColorLight,
-              //     value: mainProvider.mode,
-              //     onChanged: (bool value) async {
-              //       mainProvider.mode = value;
-              //       final prefs = await SharedPreferences.getInstance();
-              //       await prefs.setBool("mode", value);
-              //     }
-              //     )
-            ),
-            actions: [
-              IconButton(
-                  onPressed: () async {
-                    await authService.logout();
-                    Navigator.pushReplacementNamed(context, 'login');
-                  },
-                  icon: const Icon(Icons.login_outlined)),
-            ]),
+          backgroundColor: Colors.deepOrange,
+          centerTitle: true,
+          title: Text(
+            _options[_selectedIndex],
+            style: const TextStyle(color: Colors.white),
+          ),
+          bottomOpacity: 0.0,
+          elevation: 0.0,
+          leading: const SizedBox.square(
+            dimension: 40.0,
+            // child: Switch(
+            //     activeColor: Theme.of(context).primaryColorLight,
+            //     value: mainProvider.mode,
+            //     onChanged: (bool value) async {
+            //       mainProvider.mode = value;
+            //       final prefs = await SharedPreferences.getInstance();
+            //       await prefs.setBool("mode", value);
+            //     }
+            //     )
+          ),
+        ),
         body: content_widget[_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Colors.deepOrange,

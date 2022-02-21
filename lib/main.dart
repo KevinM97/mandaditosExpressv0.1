@@ -152,8 +152,12 @@ class _MyAppState extends State<MyApp> {
                       routes: {
                         'checking': (BuildContext context) =>
                             const CheckAuthScreen(),
-                        'login': (BuildContext context) => const LoadingScreen(),
+                        'login': (BuildContext context) => const LoginScreen(),
                         'home': (BuildContext context) => const HomeScreen(),
+                        'mandado': (BuildContext context) =>
+                            const MandadoScreen(),
+                        'loading_map': (BuildContext context) =>
+                            const LoadingScreen(),                            
                       },
                       scaffoldMessengerKey: NotificationService.messengerKey,
                     ));
