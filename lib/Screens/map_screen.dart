@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mandaditos_express/blocs/blocs.dart';
 import 'package:mandaditos_express/views/views.dart';
+import 'package:mandaditos_express/widgets/btn_toogle_user_route.dart';
+
 import 'package:mandaditos_express/widgets/widgets.dart';
 
 class MapScreen extends StatefulWidget {
@@ -12,18 +15,16 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-
   late LocationBloc locationBloc;
 
   @override
   void initState() {
     super.initState();
-    
+
     locationBloc = BlocProvider.of<LocationBloc>(context);
     // locationBloc.getCurrentPosition();
     locationBloc.startFollowingUser();
   }
-
 
   @override
   void dispose() {
@@ -35,28 +36,43 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocBuilder<LocationBloc, LocationState>(
-        builder: (context, state) {
+        builder: (context, locationstate) {
+          if (locationstate.lastKnownLocation == null) {
+          return const Center(child: Text('Espere por favor.'));
+          }
+          return BlocBuilder<MapBloc, MapState>(
+            builder: (context, mapState) {
 
-          if(state.lastKnownLocation == null) return const Center(child: Text('Espere por favor.'));
-          return SingleChildScrollView(
-            child: Stack(
-              children: [
-                MapView(initialLocation: state.lastKnownLocation!),
-                //TODO:Botones para controlar el mapa
-              ],
-            ),
+              Map<String, Polyline> polylines = Map.from( mapState.polylines );
+              if( !mapState.showMyRoute ){
+                polylines.removeWhere((key, value) => key == 'myRoute');
+              }
+
+
+              return SingleChildScrollView(
+                child: Stack(
+                  children: [
+                    MapView(
+                      initialLocation: locationstate.lastKnownLocation!,
+                      polylines: polylines.values.toSet(),
+                    ),
+                    //TODO:Botones para controlar el mapa
+                  ],
+                ),
+              );
+            },
           );
         },
       ),
-
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: const [
-          BtnCurrentLocation()
+          BtnToggleUserRoute(),
+          BtnFollowUser(),
+          BtnCurrentLocation(),
         ],
-        ),
-
+      ),
     );
   }
 }
