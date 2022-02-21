@@ -3,16 +3,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mandaditos_express/bloc/theme_bloc.dart';
 import 'package:mandaditos_express/blocs/gps/gps_bloc.dart';
 import 'package:mandaditos_express/services/auth_services.dart';
 import 'package:mandaditos_express/services/push_notifications_service.dart';
 import 'package:provider/provider.dart';
 import 'package:mandaditos_express/Screens/screens.dart';
 import 'package:mandaditos_express/constants.dart';
-
 import 'Screens/login/check_outh_screen.dart';
 import 'services/notifications_service.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:developer' as developer;
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -70,6 +70,7 @@ void main() async {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => AuthService()),
+      ChangeNotifierProvider(create: (_) => MainProvider()),
     ],
     child: MultiBlocProvider(
       providers: [
@@ -100,6 +101,7 @@ class _MyAppState extends State<MyApp> {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   final GlobalKey<ScaffoldMessengerState> messengerKey =
       GlobalKey<ScaffoldMessengerState>();
+
   @override
   void initState() {
     super.initState();
@@ -147,20 +149,32 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Mandaditos Express',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: kPrimaryColor,
-      ),
-      initialRoute: 'checking',
-      routes: {
-        'checking': (BuildContext context) => const CheckAuthScreen(),
-        'login': (BuildContext context) => const LoginScreen(),
-        'home': (BuildContext context) => const HomeScreen(),
-      },
-      scaffoldMessengerKey: NotificationService.messengerKey,
-    );
+    final mainProvider = Provider.of<MainProvider>(context, listen: true);
+    return FutureBuilder<bool>(
+        future: mainProvider.getPreferences(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ScreenUtilInit(
+                designSize: const Size(360, 690),
+                builder: () => MaterialApp(
+                      title: 'Mandaditos Express',
+                      debugShowCheckedModeBanner: false,
+                      theme: ThemeData(
+                        primaryColor: kPrimaryColor,
+                      ),
+                      initialRoute: 'checking',
+                      routes: {
+                        'checking': (BuildContext context) =>
+                            const CheckAuthScreen(),
+                        'login': (BuildContext context) => const LoginScreen(),
+                        'home': (BuildContext context) => const HomeScreen(),
+                      },
+                      scaffoldMessengerKey: NotificationService.messengerKey,
+                    ));
+          }
+          return const SizedBox.square(
+              dimension: 100.0, child: CircularProgressIndicator());
+        });
   }
 
   _setupToken() async {

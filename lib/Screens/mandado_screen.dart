@@ -37,7 +37,7 @@ class _MandadoWidget extends State<MandadoScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0, 70, 0, 0),
+                padding: const EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
@@ -112,10 +112,11 @@ class _MandadoWidget extends State<MandadoScreen> {
                       alignment: const AlignmentDirectional(0.65, 0),
                       child: InkWell(
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const LoadingScreen()));
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) => const LoadingScreen()));
+                          Navigator.pushReplacementNamed(context, 'login');
                         },
                         child: Column(
                           mainAxisSize: MainAxisSize.max,

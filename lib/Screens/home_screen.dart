@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mandaditos_express/providers/theme_provider.dart';
 // import 'package:mandaditos_express/providers/theme_provider.dart';
 import 'package:mandaditos_express/services/services.dart';
 import 'package:mandaditos_express/utils/main_menu.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,6 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     //final mainProvider = Provider.of<MainProvider>(context, listen: true);
     final authService = Provider.of<AuthService>(context, listen: false);
+    //final mainProvider = Provider.of<MainProvider>(context, listen: true);
 
     return Scaffold(
         appBar: AppBar(
@@ -33,14 +36,14 @@ class _HomeScreenState extends State<HomeScreen> {
             leading: const SizedBox.square(
               dimension: 40.0,
               // child: Switch(
-              //   activeColor: Theme.of(context).primaryColorLight,
-              //   value: mainProvider.mode,
-              //   onChanged: (bool value) async {
-              //     mainProvider.mode = value;
-              //     final prefs = await SharedPreferences.getInstance();
-              //     await prefs.setBool("mode", value);
-              //   },
-              // )
+              //     activeColor: Theme.of(context).primaryColorLight,
+              //     value: mainProvider.mode,
+              //     onChanged: (bool value) async {
+              //       mainProvider.mode = value;
+              //       final prefs = await SharedPreferences.getInstance();
+              //       await prefs.setBool("mode", value);
+              //     }
+              //     )
             ),
             actions: [
               //Cerrar SESION

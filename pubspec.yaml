@@ -20,6 +20,7 @@ dependencies:
   auth_buttons: ^2.0.4
   bloc: ^8.0.2
   cloud_firestore: ^3.1.8
+  cloudinary_public: ^0.11.0
   cupertino_icons: ^1.0.2
   equatable: ^2.0.3
   firebase_auth: ^3.3.7
@@ -29,12 +30,14 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^8.0.1
   flutter_local_notifications: ^9.3.2
+  flutter_screenutil: ^5.3.1
   flutter_secure_storage: ^5.0.2
   fluttertoast: ^8.0.8
   geolocator: ^8.0.5
   geolocator_web: ^2.1.4
   google_maps_flutter: ^2.1.1
   google_sign_in: ^5.2.3
+  image_picker: ^0.8.4+9
   meta: ^1.7.0
   permission_handler: ^9.0.1
   provider: ^6.0.2
@@ -85,3 +88,4 @@ flutter:
   assets:
     - assets/images/Login.png
     - assets/images/Login2.png
+    - assets/images/user.png

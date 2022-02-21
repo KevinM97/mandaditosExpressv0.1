@@ -3,7 +3,7 @@ import 'package:mandaditos_express/Screens/chat_screen.dart';
 import 'package:mandaditos_express/Screens/list_product_screen.dart';
 import 'package:mandaditos_express/Screens/loading_screen.dart';
 import 'package:mandaditos_express/Screens/mandado_screen.dart';
-import 'package:mandaditos_express/Screens/usuario_screen.dart';
+import 'package:mandaditos_express/Screens/user/usuario_screen.dart';
 
 class MenuItem {
   String label;
