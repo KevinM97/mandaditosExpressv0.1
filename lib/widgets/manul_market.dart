@@ -1,8 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mandaditos_express/blocs/blocs.dart';
 
 class ManualMarket extends StatelessWidget {
   const ManualMarket({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<SearchBloc, SearchState>(
+      builder: (context, state) {
+
+        return state.displayManualMarker
+            ? const _ManualMarketBody() // si es true
+            : const SizedBox();         // false
+
+        // if(state.displayManualMarker){
+        //   return const _ManualMarketBody();
+        // }else{
+        //   return const SizedBox();
+        // }
+      },
+    );
+  }
+}
+
+
+class _ManualMarketBody extends StatelessWidget {
+  const _ManualMarketBody({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +48,7 @@ class ManualMarket extends StatelessWidget {
 
           Center(
             child: Transform.translate(
-              offset: const Offset(0, -22),
+              offset: const Offset(0, -18),
               child: BounceInDown(
                 from: 90,
                 child: const Icon(Icons.location_on_rounded, size: 35)
@@ -67,12 +92,14 @@ class _BtnBack extends StatelessWidget {
     return FadeInLeft(
       duration: const Duration(milliseconds: 300 ),
       child: CircleAvatar(
-        maxRadius: 25,
+        maxRadius: 30,
         backgroundColor: Colors.white,
         child: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
           onPressed: (){
-            //TODO: Cancelar el marcador manual
+            BlocProvider.of<SearchBloc>(context).add(
+              OnDesactivateManualMarkerEvent()
+            );
           },
         ),
       ),
