@@ -84,4 +84,11 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     final cameraUpdate = CameraUpdate.newLatLng(newLocation);
     _mapController?.animateCamera(cameraUpdate);
   }
+
+
+  @override
+  Future<void> close() {
+    locationStateSubscription?.cancel();
+    return super.close();
+  }
 }

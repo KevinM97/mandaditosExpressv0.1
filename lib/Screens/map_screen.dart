@@ -4,7 +4,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:mandaditos_express/blocs/blocs.dart';
 import 'package:mandaditos_express/views/views.dart';
 import 'package:mandaditos_express/widgets/btn_toogle_user_route.dart';
-
 import 'package:mandaditos_express/widgets/widgets.dart';
 
 class MapScreen extends StatefulWidget {
@@ -56,7 +55,7 @@ class _MapScreenState extends State<MapScreen> {
                       initialLocation: locationstate.lastKnownLocation!,
                       polylines: polylines.values.toSet(),
                     ),
-                    //TODO:Botones para controlar el mapa
+                    const SearchBar(),
                   ],
                 ),
               );
