@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mandaditos_express/constants.dart';
-import 'package:mandaditos_express/helpers/helper.dart';
 import 'package:mandaditos_express/services/feedback_service.dart';
 
 class OpinionScreen extends StatefulWidget {
