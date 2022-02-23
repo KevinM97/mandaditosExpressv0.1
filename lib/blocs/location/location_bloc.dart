@@ -28,13 +28,13 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
 
   Future getCurrentPosition() async{
     final position = await Geolocator.getCurrentPosition();
+    // ignore: avoid_print
     print('Position: $position');
-
-    //TODO: retornar un objeto de tipo LatLng
   }
 
   void startFollowingUser(){
     add(OnStartFollowingUser());
+    // ignore: avoid_print
     print('startFollowingUser');
       positionStream = Geolocator.getPositionStream().listen((event) {
         final position = event;
@@ -47,6 +47,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
   void stopFollowingUser(){
     positionStream?.cancel();
     add( OnStopFollowingUser());
+    // ignore: avoid_print
     print('stopFollingUser');
   }
 

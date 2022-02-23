@@ -76,7 +76,7 @@ class _ManualMarketBody extends StatelessWidget {
                 height: 50,
                 shape: const StadiumBorder(),
                 onPressed: () async {  
-                  //TODO: loading
+
                     final start = locationBloc.state.lastKnownLocation;
                     if( start == null ) return;
 

@@ -54,6 +54,7 @@ class _MapScreenState extends State<MapScreen> {
                     MapView(
                       initialLocation: locationstate.lastKnownLocation!,
                       polylines: polylines.values.toSet(),
+                      markers: mapState.markers.values.toSet(),
                     ),
                     const SearchBar(),
                     const ManualMarket(),
@@ -68,7 +69,7 @@ class _MapScreenState extends State<MapScreen> {
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: const [
-          BtnToggleUserRoute(),
+          // BtnToggleUserRoute(),
           BtnFollowUser(),
           BtnCurrentLocation(),
         ],

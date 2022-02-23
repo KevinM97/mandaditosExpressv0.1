@@ -5,3 +5,4 @@ export 'package:mandaditos_express/services/push_notifications_service.dart';
 export 'package:mandaditos_express/services/notifications_service.dart';
 export 'package:mandaditos_express/services/trafic_services.dart';
 export 'package:mandaditos_express/services/traffic_interceptor.dart';
+export 'package:mandaditos_express/services/places_interceptros.dart';

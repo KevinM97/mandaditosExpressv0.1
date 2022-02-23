@@ -32,7 +32,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     on<OnStopFollowinUserEvent>((event, emit) => emit(state.copyWith(isfollowingUser: false)));
     on<UpdateUserPolylineEvent>(_onPolylineNewPoint);
     on<OnToggleUserRoute>((event, emit) => emit( state.copyWith(showMyRoute: !state.showMyRoute )));
-    on<DisplayPolylinesEvent>((event, emit) => emit(state.copyWith(polylines: event.polylines )));
+    on<DisplayPolylinesEvent>((event, emit) => emit(state.copyWith(polylines: event.polylines, markers: event.markers )));
 
     locationStateSubscription = locationBloc.stream.listen(( locationState ) {
 
@@ -71,7 +71,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
 
       final myRoute = Polyline(
         polylineId: const PolylineId('myRoute'),
-        color: Colors.black,
+        color: Colors.white,
         width: 5,
         startCap: Cap.roundCap,
         endCap: Cap.roundCap,
@@ -81,7 +81,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
         final currentPolylines = Map<String, Polyline>.from(state.polylines);
         currentPolylines['myRoute'] = myRoute;
 
-        emit(state.copyWith( polylines: currentPolylines ));
+        // emit(state.copyWith( polylines: currentPolylines ));
   }
 
   Future drawRoutePolyline( RouteDestination destination ) async {
@@ -95,10 +95,22 @@ class MapBloc extends Bloc<MapEvent, MapState> {
       endCap: Cap.roundCap,
       );
 
+      final endMarker = Marker(
+        markerId: const MarkerId('end'),
+        position: destination.points.last,
+         infoWindow: const InfoWindow(
+          title: 'Mandado',
+          snippet: 'Lugar de llegada de mandadito'
+        ),
+        );
+
       final curretnPolylines = Map<String, Polyline>.from( state.polylines );
       curretnPolylines['route'] = myRoute;
 
-      add( DisplayPolylinesEvent( curretnPolylines ));
+       final currentMarkers = Map<String, Marker>.from(state.markers);
+      currentMarkers['end'] = endMarker;
+
+      add( DisplayPolylinesEvent( curretnPolylines, currentMarkers ));
   }
 
   void moveCamera(LatLng newLocation){
