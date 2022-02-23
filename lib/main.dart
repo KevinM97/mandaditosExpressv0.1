@@ -55,13 +55,12 @@ runApp(
       providers: [
           ChangeNotifierProvider(create: (_) => AuthService()),
           ChangeNotifierProvider(create: (_) => MainProvider()),
-          //Modo oscuro
          ],
          child: MultiBlocProvider(providers: [
               BlocProvider(create: (context) => GpsBloc()),
               BlocProvider(create: (context) => LocationBloc()),
               BlocProvider(create: (context) => MapBloc(locationBloc: BlocProvider.of<LocationBloc>(context) )),   
-              BlocProvider(create: (context) => SearchBloc()),   
+              BlocProvider(create: (context) => SearchBloc(trafficService: TrafficService())),   
          ], 
          child: const MyApp(),),
      )
