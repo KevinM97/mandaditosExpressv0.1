@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
 class MandadoScreen extends StatefulWidget {
@@ -44,29 +45,33 @@ class _MandadoWidget extends State<MandadoScreen> {
                       child: Align(
                         alignment: const AlignmentDirectional(0.65, 0),
                         child: InkWell(
-                          onTap: () {},
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Container(
-                                width: 150,
-                                height: 150,
-                                clipBehavior: Clip.antiAlias,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Image.network(
-                                  'https://amigopaq.com/wp-content/uploads/2019/07/tienda.png',
-                                  fit: BoxFit.none,
-                                ),
-                              ),
-                              const Text(
-                                'Comprar',
-                                style: TextStyle(fontSize: 20),
-                              ),
-                            ],
-                          ),
-                        ),
+                            onTap: () {},
+                            child: FadeInRight(
+                                duration: const Duration(milliseconds: 500),
+                                child: Bounce(
+                                  duration: const Duration(milliseconds: 500),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Container(
+                                        width: 150,
+                                        height: 150,
+                                        clipBehavior: Clip.antiAlias,
+                                        decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: Image.network(
+                                          'https://amigopaq.com/wp-content/uploads/2019/07/tienda.png',
+                                          fit: BoxFit.none,
+                                        ),
+                                      ),
+                                      const Text(
+                                        'Comprar',
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                    ],
+                                  ),
+                                ))),
                       ),
                     ),
                   ],
@@ -79,62 +84,69 @@ class _MandadoWidget extends State<MandadoScreen> {
                     child: Align(
                       alignment: const AlignmentDirectional(-0.85, 0),
                       child: InkWell(
-                        onTap: () {},
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Container(
-                              width: 150,
-                              height: 150,
-                              clipBehavior: Clip.antiAlias,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                              ),
-                              child: Image.network(
-                                'https://previews.123rf.com/images/belliely/belliely1708/belliely170800016/85015326-servicio-de-motocicleta-de-paseo-de-entrega-pedido-env%C3%ADo-mundial-transporte-r%C3%A1pido-y-gratuito-expr%C3%A9s.jpg',
-                              ),
-                            ),
-                            const Text('Recoger',
-                                style: TextStyle(fontSize: 20)),
-                          ],
-                        ),
-                      ),
+                          onTap: () {},
+                          child: FadeInLeft(
+                              duration: const Duration(milliseconds: 500),
+                              child: Bounce(
+                                duration: const Duration(milliseconds: 500),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Container(
+                                      width: 150,
+                                      height: 150,
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Image.network(
+                                        'https://previews.123rf.com/images/belliely/belliely1708/belliely170800016/85015326-servicio-de-motocicleta-de-paseo-de-entrega-pedido-env%C3%ADo-mundial-transporte-r%C3%A1pido-y-gratuito-expr%C3%A9s.jpg',
+                                      ),
+                                    ),
+                                    const Text('Recoger',
+                                        style: TextStyle(fontSize: 20)),
+                                  ],
+                                ),
+                              ))),
                     ),
                   ),
                 ],
               ),
               Row(
                 mainAxisSize: MainAxisSize.max,
-                children: [
+                children: <Widget>[
                   Expanded(
                     child: Align(
                       alignment: const AlignmentDirectional(0.65, 0),
                       child: InkWell(
-                        onTap: () {
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => const LoadingScreen()));
-                          Navigator.pushReplacementNamed(
-                              context, 'loading_map');
-                        },
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Container(
-                              width: 150,
-                              height: 150,
-                              clipBehavior: Clip.antiAlias,
-                              decoration: boxDecoration,
-                              child: Image.network(
-                                'https://thumbs.dreamstime.com/b/caja-de-regalo-dibujos-animados-navidad-o-cumplea%C3%B1os-envuelto-negro-con-estrellas-y-lazo-rojo-ilustraci%C3%B3n-vectorial-aislada-204712652.jpg',
-                              ),
-                            ),
-                            const Text('Enviar',
-                                style: TextStyle(fontSize: 20)),
-                          ],
-                        ),
-                      ),
+                          onTap: () {
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => const LoadingScreen()));
+                            Navigator.pushReplacementNamed(
+                                context, 'loading_map');
+                          },
+                          child: FadeInRight(
+                              duration: const Duration(milliseconds: 500),
+                              child: Bounce(
+                                  duration: const Duration(milliseconds: 500),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Container(
+                                        width: 150,
+                                        height: 150,
+                                        clipBehavior: Clip.antiAlias,
+                                        decoration: boxDecoration,
+                                        child: Image.network(
+                                          'https://thumbs.dreamstime.com/b/caja-de-regalo-dibujos-animados-navidad-o-cumplea%C3%B1os-envuelto-negro-con-estrellas-y-lazo-rojo-ilustraci%C3%B3n-vectorial-aislada-204712652.jpg',
+                                        ),
+                                      ),
+                                      const Text('Enviar',
+                                          style: TextStyle(fontSize: 20)),
+                                    ],
+                                  )))),
                     ),
                   ),
                 ],

@@ -12,7 +12,7 @@ List<MenuItem> menuOptions = [
   MenuItem('Usuario', Icons.person),
   MenuItem('Mandado', Icons.shopping_cart_outlined),
   MenuItem('Chat', Icons.chat),
-  MenuItem('Opinión', Icons.chat_outlined),
+  MenuItem('FeedBack', Icons.chat_outlined),
 ];
 
 // ignore: non_constant_identifier_names

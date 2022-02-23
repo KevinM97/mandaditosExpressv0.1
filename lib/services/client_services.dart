@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:mandaditos_express/models/client_model.dart';
 
 class ClientService {
@@ -7,7 +6,7 @@ class ClientService {
   Future<Cliente?> getCliente(String email) async {
     Cliente? cliente;
     final QuerySnapshot result = await Future.value(FirebaseFirestore.instance
-        .collection("Cliente")
+        .collection("cliente")
         .where("correo_cliente", isEqualTo: email)
         .get());
     var list = result.docs;

@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:mandaditos_express/Screens/login/register.dart';
 // import 'package:image_picker/image_picker.dart';
 import 'package:mandaditos_express/Screens/user/edit_info_screen.dart';
 import 'package:mandaditos_express/Screens/user/edit_pass_screen.dart';
@@ -8,7 +10,9 @@ import 'package:mandaditos_express/models/client_model.dart';
 import 'package:mandaditos_express/services/auth_services.dart';
 import 'package:mandaditos_express/services/client_services.dart';
 import 'package:provider/provider.dart';
+
 // import 'package:mandaditos_express/services/image_service.dart';
+var email = GlobalKey();
 
 class AccountPage extends StatefulWidget {
   const AccountPage({Key? key}) : super(key: key);
@@ -19,6 +23,8 @@ class AccountPage extends StatefulWidget {
 
 class _AccountPageState extends State<AccountPage> {
   final ClientService client_service = ClientService();
+
+  final storage = const FlutterSecureStorage();
   late Cliente cliente;
   @override
   void initState() {
@@ -60,7 +66,7 @@ class _AccountPageState extends State<AccountPage> {
   }
 
   void cargacliente() async {
-    cliente = (await client_service.getCliente("test@gmail.com"))!;
+    cliente = (await client_service.getCliente("jose1n8n98@gmail.com"))!;
     if (mounted) {
       setState(() {});
     }

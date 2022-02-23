@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:mandaditos_express/constants.dart';
 import 'package:mandaditos_express/models/client_model.dart';
 import 'package:mandaditos_express/providers/login_form_provider.dart';
@@ -23,7 +22,6 @@ class _RegisterFormState extends State<RegisterForm> {
   @override
   Widget build(BuildContext context) {
     final loginForm = Provider.of<LoginFormProvider>(context);
-
     return Form(
       key: loginForm.formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -126,6 +124,7 @@ class _RegisterFormState extends State<RegisterForm> {
                           imgCliente: '',
                           nombreCliente: loginForm.name,
                           telefonoCliente: loginForm.phone);
+
                       var resp = clientService.sendToServer(cliente);
                       // ignore: unrelated_type_equality_checks
                       if (resp == 201) {

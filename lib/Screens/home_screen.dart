@@ -3,7 +3,6 @@ import 'package:mandaditos_express/services/services.dart';
 import 'package:mandaditos_express/utils/main_menu.dart';
 import 'package:provider/provider.dart';
 
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -13,7 +12,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 1;
-  final List<String> _options = ["Usuario", "Mandado", "Chat", "Opinión"];
+  final List<String> _options = ["Usuario", "Mandado", "Chat", "FeedBack"];
   @override
   Widget build(BuildContext context) {
     //final mainProvider = Provider.of<MainProvider>(context, listen: true);

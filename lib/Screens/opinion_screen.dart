@@ -1,5 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mandaditos_express/constants.dart';
+import 'package:mandaditos_express/helpers/helper.dart';
+import 'package:mandaditos_express/services/feedback_service.dart';
 
 class OpinionScreen extends StatefulWidget {
   const OpinionScreen({Key? key}) : super(key: key);
@@ -9,106 +12,118 @@ class OpinionScreen extends StatefulWidget {
 }
 
 class _OpinionScreenState extends State<OpinionScreen> {
+  FeedBackService feedbackservice = FeedBackService();
+  late String feedback = "";
+  @override
+  void initState() {
+    //feedback;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 1,
-      decoration: const BoxDecoration(
-        shape: BoxShape.rectangle,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Align(
-            child: Text(
-              'Cuentanos tu experiencia',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 25,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(15, 15, 15, 15),
-            child: Text(
-              'Por favor, déjanos tu opinión, ayúdanos a mejorar.\n¿Cómo estuvo la entrega?\n¿Qué tal te pareció el servicio?',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.black,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(30, 30, 30, 30),
-            child: TextFormField(
-              decoration: InputDecoration(
-                hintText: 'Escribe tu opinión aquí...',
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: const BorderSide(
-                      color: Colors.black, width: 0, style: BorderStyle.solid),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: const BorderSide(
-                      color: Colors.black, width: 0, style: BorderStyle.solid),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                filled: true,
-              ),
-              style: const TextStyle(
-                fontWeight: FontWeight.w600,
-              ),
-              textAlign: TextAlign.start,
-              maxLines: 10,
-            ),
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Row(
+    Size size = MediaQuery.of(context).size * 0.9;
+    final textcontro = TextEditingController();
+    return Form(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      child: Center(
+        child: SizedBox(
+            width: size.width,
+            child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  MaterialButton(
-                      color: kBackgroundColor,
-                      disabledColor: Colors.grey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30)),
-                      minWidth: 130,
-                      height: 40,
-                      onPressed: () {},
-                      child: const Text(
-                        'CANCELAR',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
+                  const Text('Dejanos tu FeedBack',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 30,
+                        fontWeight: FontWeight.w600,
                       )),
-                  const SizedBox(width: 20.0),
-                  MaterialButton(
-                      color: kBackgroundColor,
-                      disabledColor: Colors.grey,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30)),
-                      minWidth: 130,
-                      height: 40,
-                      onPressed: () {},
-                      child: const Text(
-                        'ENVIAR',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
+                  const SizedBox(height: 20.0),
+                  const Text('Por favor, si tienes una queja, cuentanos.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
                       )),
-                ],
-              )
-            ],
-          ),
-        ],
+                  const SizedBox(height: 20.0),
+                  TextFormField(
+                    controller: textcontro,
+                    validator: (value) {
+                      return (value != null && value.isNotEmpty)
+                          ? null
+                          : 'No hay texto';
+                    },
+                    decoration: InputDecoration(
+                        hintText: 'Escribe tu FeedBack aquí...',
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide: const BorderSide(
+                                color: Colors.black,
+                                width: 0,
+                                style: BorderStyle.solid),
+                            borderRadius: BorderRadius.circular(12)),
+                        filled: true),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w600, fontSize: 15),
+                    textAlign: TextAlign.start,
+                    maxLines: 10,
+                    onChanged: (value) => feedback = value,
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      MaterialButton(
+                          color: kBackgroundColor,
+                          disabledColor: Colors.grey,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30)),
+                          minWidth: 130,
+                          height: 40,
+                          onPressed: () {
+                            Navigator.pushReplacementNamed(context, 'home');
+                          },
+                          child: const Text(
+                            'CANCELAR',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          )),
+                      MaterialButton(
+                          color: kBackgroundColor,
+                          disabledColor: Colors.grey,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30)),
+                          minWidth: 130,
+                          height: 40,
+                          onPressed: () async {
+                            await feedbackservice.create(
+                              feedback,
+                            );
+                            textcontro.clear();
+                            FocusScope.of(context).requestFocus(FocusNode());
+                            showDialog(
+                              context: context,
+                              builder: (context) => const AlertDialog(
+                                title: Text(
+                                  'Su FeedBack ha sido enviando',
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                              ),
+                            );
+                          },
+                          child: const Text(
+                            'ENVIAR',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          )),
+                    ],
+                  )
+                ])),
       ),
     );
   }

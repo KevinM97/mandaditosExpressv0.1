@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mandaditos_express/constants.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ChatWidget extends StatefulWidget {
   const ChatWidget({Key? key}) : super(key: key);
@@ -9,6 +9,11 @@ class ChatWidget extends StatefulWidget {
 }
 
 class _ChatWidgetState extends State<ChatWidget> {
+  final _url = "https://wa.me/";
+  void _launchURL() async {
+    if (!await launch(_url)) throw 'Could not launch $_url';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -28,7 +33,7 @@ class _ChatWidgetState extends State<ChatWidget> {
             padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
             minWidth: MediaQuery.of(context).size.width,
             onPressed: () {
-              'https://wa.me/123456798';
+              _launchURL();
             },
             child: const Text(
               'Ir al chat de WhatsApp',
