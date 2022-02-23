@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mandaditos_express/blocs/blocs.dart';
+import 'package:mandaditos_express/helpers/helper.dart';
 
 class ManualMarket extends StatelessWidget {
   const ManualMarket({Key? key}) : super(key: key);
@@ -78,10 +79,19 @@ class _ManualMarketBody extends StatelessWidget {
                   //TODO: loading
                     final start = locationBloc.state.lastKnownLocation;
                     if( start == null ) return;
+
                     final end = mapBloc.mapCenter;
                     if( end == null ) return;
 
-                   await searchBloc.getCoorsStartToEnd(start, end);
+
+                    showLoadingMessage(context);
+
+                   final destination = await searchBloc.getCoorsStartToEnd(start, end);
+                   await mapBloc.drawRoutePolyline(destination);
+                   
+                   searchBloc.add(OnDesactivateManualMarkerEvent());
+
+                   Navigator.pop(context);
                 },
               ),
             )
