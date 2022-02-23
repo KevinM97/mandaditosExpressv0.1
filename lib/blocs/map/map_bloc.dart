@@ -32,7 +32,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     on<OnStopFollowinUserEvent>((event, emit) => emit(state.copyWith(isfollowingUser: false)));
     on<UpdateUserPolylineEvent>(_onPolylineNewPoint);
     on<OnToggleUserRoute>((event, emit) => emit( state.copyWith(showMyRoute: !state.showMyRoute )));
-    on<DisplayPolylinesEvent>((event, emit) => emit(state.copyWith(polylines: event.polylines )));
+    on<DisplayPolylinesEvent>((event, emit) => emit(state.copyWith(polylines: event.polylines, markers: event.markers )));
 
     locationStateSubscription = locationBloc.stream.listen(( locationState ) {
 
@@ -95,10 +95,31 @@ class MapBloc extends Bloc<MapEvent, MapState> {
       endCap: Cap.roundCap,
       );
 
+      final startMarker = Marker(
+        markerId: const MarkerId('start'),
+        position: destination.points.first,
+        infoWindow: const InfoWindow(
+          title: 'Inicio',
+          snippet: 'Inicio del mandado'
+        ),
+        );
+      final endMarker = Marker(
+        markerId: const MarkerId('end'),
+        position: destination.points.last,
+         infoWindow: const InfoWindow(
+          title: 'Mandado',
+          snippet: 'Lugar de llegada de mandadito'
+        ),
+        );
+
       final curretnPolylines = Map<String, Polyline>.from( state.polylines );
       curretnPolylines['route'] = myRoute;
 
-      add( DisplayPolylinesEvent( curretnPolylines ));
+       final currentMarkers = Map<String, Marker>.from(state.markers);
+      currentMarkers['start'] = startMarker;
+      currentMarkers['end'] = endMarker;
+
+      add( DisplayPolylinesEvent( curretnPolylines, currentMarkers ));
   }
 
   void moveCamera(LatLng newLocation){
