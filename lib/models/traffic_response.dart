@@ -1,11 +1,10 @@
 // To parse this JSON data, do
 //
-//     final trafficResponse = trafficResponseFromJson(jsonString);
+//     final trafficResponse = trafficResponseFromMap(jsonString);
 
 import 'dart:convert';
 
 class TrafficResponse {
-  
     TrafficResponse({
        required this.routes,
        required this.waypoints,
@@ -18,20 +17,20 @@ class TrafficResponse {
     final String code;
     final String uuid;
 
-    factory TrafficResponse.fromRawJson(String str) => TrafficResponse.fromJson(json.decode(str));
+    factory TrafficResponse.fromJson(String str) => TrafficResponse.fromMap(json.decode(str));
 
-    String toRawJson() => json.encode(toJson());
+    String toJson() => json.encode(toMap());
 
-    factory TrafficResponse.fromJson(Map<String, dynamic> json) => TrafficResponse(
-        routes: List<Route>.from(json["routes"].map((x) => Route.fromJson(x))),
-        waypoints: List<Waypoint>.from(json["waypoints"].map((x) => Waypoint.fromJson(x))),
+    factory TrafficResponse.fromMap(Map<String, dynamic> json) => TrafficResponse(
+        routes: List<Route>.from(json["routes"].map((x) => Route.fromMap(x))),
+        waypoints: List<Waypoint>.from(json["waypoints"].map((x) => Waypoint.fromMap(x))),
         code: json["code"],
         uuid: json["uuid"],
     );
 
-    Map<String, dynamic> toJson() => {
-        "routes": List<dynamic>.from(routes.map((x) => x.toJson())),
-        "waypoints": List<dynamic>.from(waypoints.map((x) => x.toJson())),
+    Map<String, dynamic> toMap() => {
+        "routes": List<dynamic>.from(routes.map((x) => x.toMap())),
+        "waypoints": List<dynamic>.from(waypoints.map((x) => x.toMap())),
         "code": code,
         "uuid": uuid,
     };
@@ -39,12 +38,12 @@ class TrafficResponse {
 
 class Route {
     Route({
-        required this.weightName,
-        required this.weight,
-        required this.duration,
-        required this.distance,
-        required this.legs,
-        required this.geometry,
+       required  this.weightName,
+       required  this.weight,
+       required  this.duration,
+       required  this.distance,
+       required  this.legs,
+       required  this.geometry,
     });
 
     final String weightName;
@@ -54,38 +53,38 @@ class Route {
     final List<Leg> legs;
     final String geometry;
 
-    factory Route.fromRawJson(String str) => Route.fromJson(json.decode(str));
+    factory Route.fromJson(String str) => Route.fromMap(json.decode(str));
 
-    String toRawJson() => json.encode(toJson());
+    String toJson() => json.encode(toMap());
 
-    factory Route.fromJson(Map<String, dynamic> json) => Route(
+    factory Route.fromMap(Map<String, dynamic> json) => Route(
         weightName: json["weight_name"],
         weight: json["weight"].toDouble(),
         duration: json["duration"].toDouble(),
         distance: json["distance"].toDouble(),
-        legs: List<Leg>.from(json["legs"].map((x) => Leg.fromJson(x))),
+        legs: List<Leg>.from(json["legs"].map((x) => Leg.fromMap(x))),
         geometry: json["geometry"],
     );
 
-    Map<String, dynamic> toJson() => {
+    Map<String, dynamic> toMap() => {
         "weight_name": weightName,
         "weight": weight,
         "duration": duration,
         "distance": distance,
-        "legs": List<dynamic>.from(legs.map((x) => x.toJson())),
+        "legs": List<dynamic>.from(legs.map((x) => x.toMap())),
         "geometry": geometry,
     };
 }
 
 class Leg {
     Leg({
-        required this.viaWaypoints,
-        required this.admins,
-        required this.weight,
-        required this.duration,
-        required this.steps,
-        required this.distance,
-        required this.summary,
+       required this.viaWaypoints,
+       required this.admins,
+       required this.weight,
+       required this.duration,
+       required this.steps,
+       required this.distance,
+       required this.summary,
     });
 
     final List<dynamic> viaWaypoints;
@@ -96,13 +95,13 @@ class Leg {
     final double distance;
     final String summary;
 
-    factory Leg.fromRawJson(String str) => Leg.fromJson(json.decode(str));
+    factory Leg.fromJson(String str) => Leg.fromMap(json.decode(str));
 
-    String toRawJson() => json.encode(toJson());
+    String toJson() => json.encode(toMap());
 
-    factory Leg.fromJson(Map<String, dynamic> json) => Leg(
+    factory Leg.fromMap(Map<String, dynamic> json) => Leg(
         viaWaypoints: List<dynamic>.from(json["via_waypoints"].map((x) => x)),
-        admins: List<Admin>.from(json["admins"].map((x) => Admin.fromJson(x))),
+        admins: List<Admin>.from(json["admins"].map((x) => Admin.fromMap(x))),
         weight: json["weight"].toDouble(),
         duration: json["duration"].toDouble(),
         steps: List<dynamic>.from(json["steps"].map((x) => x)),
@@ -110,9 +109,9 @@ class Leg {
         summary: json["summary"],
     );
 
-    Map<String, dynamic> toJson() => {
+    Map<String, dynamic> toMap() => {
         "via_waypoints": List<dynamic>.from(viaWaypoints.map((x) => x)),
-        "admins": List<dynamic>.from(admins.map((x) => x.toJson())),
+        "admins": List<dynamic>.from(admins.map((x) => x.toMap())),
         "weight": weight,
         "duration": duration,
         "steps": List<dynamic>.from(steps.map((x) => x)),
@@ -130,16 +129,16 @@ class Admin {
     final String iso31661Alpha3;
     final String iso31661;
 
-    factory Admin.fromRawJson(String str) => Admin.fromJson(json.decode(str));
+    factory Admin.fromJson(String str) => Admin.fromMap(json.decode(str));
 
-    String toRawJson() => json.encode(toJson());
+    String toJson() => json.encode(toMap());
 
-    factory Admin.fromJson(Map<String, dynamic> json) => Admin(
+    factory Admin.fromMap(Map<String, dynamic> json) => Admin(
         iso31661Alpha3: json["iso_3166_1_alpha3"],
         iso31661: json["iso_3166_1"],
     );
 
-    Map<String, dynamic> toJson() => {
+    Map<String, dynamic> toMap() => {
         "iso_3166_1_alpha3": iso31661Alpha3,
         "iso_3166_1": iso31661,
     };
@@ -156,17 +155,17 @@ class Waypoint {
     final String name;
     final List<double> location;
 
-    factory Waypoint.fromRawJson(String str) => Waypoint.fromJson(json.decode(str));
+    factory Waypoint.fromJson(String str) => Waypoint.fromMap(json.decode(str));
 
-    String toRawJson() => json.encode(toJson());
+    String toJson() => json.encode(toMap());
 
-    factory Waypoint.fromJson(Map<String, dynamic> json) => Waypoint(
+    factory Waypoint.fromMap(Map<String, dynamic> json) => Waypoint(
         distance: json["distance"].toDouble(),
         name: json["name"],
         location: List<double>.from(json["location"].map((x) => x.toDouble())),
     );
 
-    Map<String, dynamic> toJson() => {
+    Map<String, dynamic> toMap() => {
         "distance": distance,
         "name": name,
         "location": List<dynamic>.from(location.map((x) => x)),

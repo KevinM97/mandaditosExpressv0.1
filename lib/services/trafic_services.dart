@@ -1,6 +1,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart' show LatLng;
+import 'package:mandaditos_express/models/models.dart';
 
 import 'package:mandaditos_express/services/services.dart';
 
@@ -19,6 +20,8 @@ class TrafficService{
 
     final resp = await _dioTraffic.get(url);
 
-    return resp.data;
+    final data = TrafficResponse.fromMap(resp.data);
+    
+    return data;
   }
 }

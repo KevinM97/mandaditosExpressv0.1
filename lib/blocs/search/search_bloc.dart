@@ -20,6 +20,8 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   }
 
   Future getCoorsStartToEnd( LatLng start, LatLng end ) async {
-    final resp = trafficService.getCoorsStarToEnd(start, end);
+    final resp = await trafficService.getCoorsStarToEnd(start, end);
+
+    return resp;
   }
 }
