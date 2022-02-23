@@ -14,7 +14,8 @@ class AuthService extends ChangeNotifier {
       'email': email,
       'password': password,
       'usuario': user,
-      'returnSecureToken': true
+      'returnSecureToken': true,
+      'phone': true
     };
 
     final url =

@@ -48,9 +48,9 @@ class _LoginScreenState extends State<LoginScreen>
         .viewInsets
         .bottom; //Lo usaremos para determinar Keyboard esta abierto o no
     double defaultLoginSize = size.height - (size.height * 0.2);
-    double defaultRegisterSize = size.height - (size.height * 0.2);
+    double defaultRegisterSize = size.height - (size.height * 0.1);
     containerSize = Tween<double>(
-            begin: size.height * 0.12, end: defaultRegisterSize)
+            begin: size.height * 0.1, end: defaultRegisterSize)
         .animate(
             CurvedAnimation(parent: animationController, curve: Curves.linear));
     return Scaffold(
@@ -161,13 +161,13 @@ class _LoginScreenState extends State<LoginScreen>
                           height: 150,
                           width: 300.0,
                         ),
-                        const SizedBox(height: 10.0),
+                        const SizedBox(height: 5.0),
                         const Text(
                           'Registrarse',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 30),
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 10),
                         ChangeNotifierProvider(
                           create: (_) => LoginFormProvider(),
                           child: const RegisterForm(),
@@ -191,8 +191,8 @@ class _LoginScreenState extends State<LoginScreen>
           height: containerSize.value,
           decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(50),
-                topRight: Radius.circular(50),
+                topLeft: Radius.circular(30),
+                topRight: Radius.circular(30),
               ),
               color: kPrimaryColor),
           alignment: Alignment.center,

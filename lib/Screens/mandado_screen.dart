@@ -115,7 +115,8 @@ class _MandadoWidget extends State<MandadoScreen> {
                           //     context,
                           //     MaterialPageRoute(
                           //         builder: (context) => const LoadingScreen()));
-                          Navigator.pushReplacementNamed(context, 'loading_map');
+                          Navigator.pushReplacementNamed(
+                              context, 'loading_map');
                         },
                         child: Column(
                           mainAxisSize: MainAxisSize.max,

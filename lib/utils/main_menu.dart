@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mandaditos_express/Screens/opinion_screen.dart';
 import 'package:mandaditos_express/Screens/screens.dart';
 
 class MenuItem {
@@ -19,6 +20,5 @@ List<Widget> content_widget = [
   const AccountPage(),
   const MandadoScreen(),
   const ChatWidget(),
-  const ListProduct(),
-  const LoadingScreen()
+  const OpinionScreen(),
 ];

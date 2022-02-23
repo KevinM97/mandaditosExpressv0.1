@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 // import 'package:image_picker/image_picker.dart';
 import 'package:mandaditos_express/Screens/user/edit_info_screen.dart';
 import 'package:mandaditos_express/Screens/user/edit_pass_screen.dart';
+import 'package:mandaditos_express/models/client_model.dart';
 import 'package:mandaditos_express/services/auth_services.dart';
+import 'package:mandaditos_express/services/client_services.dart';
 import 'package:provider/provider.dart';
 // import 'package:mandaditos_express/services/image_service.dart';
 
@@ -16,6 +18,16 @@ class AccountPage extends StatefulWidget {
 }
 
 class _AccountPageState extends State<AccountPage> {
+  final ClientService client_service = ClientService();
+  late Cliente cliente;
+  @override
+  void initState() {
+    // TODO: implement initState
+    cliente = Cliente.created();
+    cargacliente();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,12 +39,14 @@ class _AccountPageState extends State<AccountPage> {
               vertical: 15.0,
             ),
             child: Column(
-              children: const [
+              children: [
                 _Avatar(),
-                SizedBox(
+                const SizedBox(
                   height: 10.0,
                 ),
-                _Name(),
+                _Name(
+                  cliente: cliente,
+                ),
               ],
             ),
           ),
@@ -43,6 +57,13 @@ class _AccountPageState extends State<AccountPage> {
         ],
       ),
     );
+  }
+
+  void cargacliente() async {
+    cliente = (await client_service.getCliente("test@gmail.com"))!;
+    if (mounted) {
+      setState(() {});
+    }
   }
 }
 
@@ -108,8 +129,11 @@ class _AvatarState extends State<_Avatar> {
 }
 
 class _Name extends StatefulWidget {
-  const _Name({Key? key}) : super(key: key);
-
+  const _Name({
+    Key? key,
+    required this.cliente,
+  }) : super(key: key);
+  final Cliente cliente;
   @override
   State<_Name> createState() => _NameState();
 }
@@ -118,19 +142,19 @@ class _NameState extends State<_Name> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: const [
+      children: [
         Text(
-          'Usuario Usuario',
-          style: TextStyle(
+          widget.cliente.nombreCliente,
+          style: const TextStyle(
             fontSize: 17.0,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
         ),
-        SizedBox(height: 5.0),
+        const SizedBox(height: 5.0),
         Text(
-          'user@email.com',
-          style: TextStyle(color: Colors.grey),
+          widget.cliente.correoCliente,
+          style: const TextStyle(color: Colors.grey),
         )
       ],
     );
