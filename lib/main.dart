@@ -5,7 +5,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mandaditos_express/blocs/blocs.dart';
 import 'package:mandaditos_express/services/services.dart';
-import 'package:mandaditos_express/bloc/theme_bloc.dart';
+import 'package:mandaditos_express/blocs/theme_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:mandaditos_express/Screens/screens.dart';
 import 'package:mandaditos_express/constants.dart';
@@ -55,12 +55,12 @@ runApp(
       providers: [
           ChangeNotifierProvider(create: (_) => AuthService()),
           ChangeNotifierProvider(create: (_) => MainProvider()),
-          //Modo oscuro
          ],
          child: MultiBlocProvider(providers: [
               BlocProvider(create: (context) => GpsBloc()),
               BlocProvider(create: (context) => LocationBloc()),
-
+              BlocProvider(create: (context) => MapBloc(locationBloc: BlocProvider.of<LocationBloc>(context) )),   
+              BlocProvider(create: (context) => SearchBloc(trafficService: TrafficService())),   
          ], 
          child: const MyApp(),),
      )
