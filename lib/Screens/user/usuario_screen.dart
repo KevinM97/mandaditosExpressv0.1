@@ -18,11 +18,10 @@ class AccountPage extends StatefulWidget {
 }
 
 class _AccountPageState extends State<AccountPage> {
-  final ClientService client_service = ClientService();
+  final ClientService clientservice = ClientService();
   late Cliente cliente;
   @override
   void initState() {
-    // TODO: implement initState
     cliente = Cliente.created();
     cargacliente();
     super.initState();
@@ -40,7 +39,7 @@ class _AccountPageState extends State<AccountPage> {
             ),
             child: Column(
               children: [
-                _Avatar(),
+                const _Avatar(),
                 const SizedBox(
                   height: 10.0,
                 ),
@@ -60,7 +59,7 @@ class _AccountPageState extends State<AccountPage> {
   }
 
   void cargacliente() async {
-    cliente = (await client_service.getCliente("test@gmail.com"))!;
+    cliente = (await clientservice.getCliente("km@mail.com"))!;
     if (mounted) {
       setState(() {});
     }

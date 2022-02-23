@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mandaditos_express/Screens/screens.dart';
 import 'package:mandaditos_express/blocs/blocs.dart';
 import 'package:mandaditos_express/ui/ui.dart';
 
@@ -20,6 +21,7 @@ class BtnCurrentLocation extends StatelessWidget {
         child: IconButton(
           icon: const Icon(Icons.my_location_outlined, color: Colors.black),
           onPressed: (){
+            Navigator.push(context,  MaterialPageRoute(builder: (context) => const HomeScreen()));
             final userLocation = locationBloc.state.lastKnownLocation;
 
             if( userLocation == null ){

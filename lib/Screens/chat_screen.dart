@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mandaditos_express/constants.dart';
 
 class ChatWidget extends StatefulWidget {
   const ChatWidget({Key? key}) : super(key: key);

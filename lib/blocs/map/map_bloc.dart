@@ -95,14 +95,6 @@ class MapBloc extends Bloc<MapEvent, MapState> {
       endCap: Cap.roundCap,
       );
 
-      final startMarker = Marker(
-        markerId: const MarkerId('start'),
-        position: destination.points.first,
-        infoWindow: const InfoWindow(
-          title: 'Inicio',
-          snippet: 'Inicio del mandado'
-        ),
-        );
       final endMarker = Marker(
         markerId: const MarkerId('end'),
         position: destination.points.last,
@@ -116,7 +108,6 @@ class MapBloc extends Bloc<MapEvent, MapState> {
       curretnPolylines['route'] = myRoute;
 
        final currentMarkers = Map<String, Marker>.from(state.markers);
-      currentMarkers['start'] = startMarker;
       currentMarkers['end'] = endMarker;
 
       add( DisplayPolylinesEvent( curretnPolylines, currentMarkers ));
