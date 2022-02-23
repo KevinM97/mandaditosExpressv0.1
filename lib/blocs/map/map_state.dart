@@ -13,7 +13,7 @@ class MapState extends Equatable {
   const MapState({
     this.isMapInitialized = false, 
     this.isfollowingUser = true,
-    this.showMyRoute = true,
+    this.showMyRoute = false,
     Map<String, Polyline>? polylines,
     Map<String, Marker>? markers,
 

@@ -19,7 +19,7 @@ class BtnCurrentLocation extends StatelessWidget {
         backgroundColor: Colors.white,
         maxRadius: 25,
         child: IconButton(
-          icon: const Icon(Icons.my_location_outlined, color: Colors.black),
+          icon: const Icon(Icons.home_rounded, color: Colors.black),
           onPressed: (){
             Navigator.push(context,  MaterialPageRoute(builder: (context) => const HomeScreen()));
             final userLocation = locationBloc.state.lastKnownLocation;
